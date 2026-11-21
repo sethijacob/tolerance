@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tolerance has moved</title>
+<style>
+:root{--bg:#0d1117;--tx:#e6edf3;--mut:#8b949e;--blue:#3B8BFF}
+@media (prefers-color-scheme:light){:root{--bg:#f6f8fa;--tx:#1f2328;--mut:#59636e}}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 -apple-system,system-ui,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center}
+main{max-width:360px;padding:24px 16px;text-align:center}
+h1{font-size:22px;margin:0 0 8px}p{color:var(--mut);margin:0 0 20px}
+a.btn{display:block;background:var(--blue);color:#fff;text-decoration:none;font-weight:600;padding:14px;border-radius:12px}
+</style></head><body><main>
+<h1>Tolerance has moved</h1>
+<p id="msg">Taking you to the new address…</p>
+<a class="btn" id="go" href="https://tolerance-app.github.io/">Open Tolerance</a>
+</main>
+<script>
+/* Forwards progress saved on this old address (localStorage "tol3", same origin as the old app)
+   to the new site's #import= move path (v33.js), which merges it with mergeP28, so it can only add. */
+(function(){
+ var url="https://tolerance-app.github.io/";
+ try{
+  var raw=localStorage.getItem("tol3");
+  if(raw){
+   var st=JSON.parse(raw);
+   if(st&&typeof st=="object"){
+    var json=JSON.stringify({tolerance:"move",st:st});
+    var bytes=new TextEncoder().encode(json),bin="";
+    for(var i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
+    url+="#import="+btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+    document.getElementById("msg").textContent="Bringing your progress with you…";
+   }
+  }
+ }catch(e){}
+ document.getElementById("go").href=url;
+ setTimeout(function(){location.replace(url)},600);
+})();
+</script></body></html>
