@@ -19,6 +19,8 @@ a.btn{display:block;background:var(--blue);color:#fff;text-decoration:none;font-
    to the new site's #import= move path (v33.js), which merges it with mergeP28, so it can only add. */
 (function(){
  var url="https://tolerance-app.github.io/";
+ var inc=/[#&]import=([A-Za-z0-9_\-]+)/.exec(location.hash||"");
+ if(inc){url+="#import="+inc[1];document.getElementById("go").href=url;document.getElementById("msg").textContent="Bringing your progress with you…";setTimeout(function(){location.replace(url)},600);return}
  try{
   var raw=localStorage.getItem("tol3");
   if(raw){
